@@ -1,0 +1,525 @@
+import React, { Component } from 'react';
+import { View, AppRegistry, Text, StyleSheet, ImageBackground, TextInput, TouchableHighlight, Dimensions } from 'react-native';
+
+let deviceHeight = Dimensions.get('window').height;
+let deviceWidth = Dimensions.get('window').width;
+
+export default class App extends Component {
+    state = {
+        player: 'Player Name',
+        correct: 0,
+        incorrect: 0,
+        total: 0,
+        score: 0,
+        topScore: 0,
+        playerNamePageDisplay: 'block',
+        gameDisplay: 'none',
+        standingsPageDisplay: 'none',
+        games: [],
+        userCapital: '',
+        selectedState: "",
+        selectedCapital: "",
+        stateAndCapital: [
+            {state: "Alaska", capital: "Juneau" },
+            {state: "Arkansas", capital: "Little Rock" },
+            {state: "Arizona", capital: "Phoenix" },
+            {state: "Alabama", capital: "Montgomery" },
+            {state: "California", capital: "Sacramento"},
+            {state: "Colorado", capital: "Denver"},
+            {state: "Connecticut", capital: "Hartford"},
+            {state: "Delaware", capital: "Dover"},
+            {state: "Florida", capital: "Tallahassee"},
+            {state: "Georgia", capital: "Georgia"},
+            {state: "Hawaii", capital: "Honolulu"},
+            {state: "Iowa", capital: "Des Moines"},
+            {state: "Indiana", capital: "Indianapolis"},
+            {state: "Illinois", capital: "Springfield"},
+            {state: "Idaho", capital: "Boise"},
+            {state: "Kentucky", capital: "Frankfort"},
+            {state: "Kansas", capital: "Topeka"},
+            {state: "Louisiana", capital: "Baton Rouge"},
+            {state: "Missouri", capital: "Jefferson City"},
+            {state: "Minnesota", capital: "St Paul"},
+            {state: "Maryland", capital: "Annapolis"},
+            {state: "Mississippi", capital: "Jackson"},
+            {state: "Montana", capital: "Helena"},
+            {state: "Michigan", capital: "Lansing"},
+            {state: "Massachusetts", capital: "Boston"},
+            {state: "Maine", capital: "Augusta"},
+            {state: "Nevada", capital: "Carson City"},
+            {state: "New York", capital: "Albany"},
+            {state: "North Carolina", capital: "Raleigh"},
+            {state: "North Dakota", capital: "Bismarck"},
+            {state: "New Hampshire", capital: "Concord"},
+            {state: "New Mexico", capital: "Santa Fe"},
+            {state: "Nebraska", capital: "Lincoln"},
+            {state: "New Jersey", capital: "Trinity"},
+            {state: "Ohio", capital: "Columbus"},
+            {state: "Oklahoma", capital: "Oklahoma City"},
+            {state: "Oregon", capital: "Salem"},
+            {state: "Pennsylvania", capital: "Harrisburg"},
+            {state: "Rhode Island", capital: "Providence"},
+            {state: "South Carolina", capital: "Columbia"},
+            {state: "South Dakota", capital: "Pierre"},
+            {state: "Tennessee", capital: "Nashville"},
+            {state: "Texas", capital: "Austin"},
+            {state: "Utah", capital: "Salt Lake City"},
+            {state: "Vermont", capital: "Montpelier"},
+            {state: "Virginia", capital: "Richmond"},
+            {state: "Washington", capital: "Olympia"},
+            {state: "West Virginia", capital: "Charleston"},
+            {state: "Wisconsin", capital: "Madison"},
+            {state: "Wyoming", capital: "Cheyenne"},
+            
+        ],
+    }
+
+    componentDidMount() {
+        this.chooseRandomState();
+    }
+
+    handlePlayerNamePagePress = () => this.setState(state => ({
+        playerNamePageDisplay: 'block',
+        gameDisplay: 'none',
+        standingsPageDisplay: 'none',
+    }));
+
+    handleGameDisplayPagePress = () => this.setState(state => ({
+        playerNamePageDisplay: 'none',
+        gameDisplay: 'block',
+        standingsPageDisplay: 'none',
+    }));
+
+    handleStandingsPagePress = () => this.setState(state => ({
+        playerNamePageDisplay: 'none',
+        gameDisplay: 'none',
+        standingsPageDisplay: 'block',
+    }));
+
+    chooseRandomState = () => {
+        const randomIndex = Math.floor(Math.random() * this.state.stateAndCapital.length);
+        this.setState({
+            selectedState: this.state.stateAndCapital[randomIndex].state,
+            selectedCapital: this.state.stateAndCapital[randomIndex].capital,
+        });
+    };
+
+    checkPlayerAnswer = () => {
+        if (this.state.selectedCapital === this.state.userCapital) {
+            this.setState({
+                total: this.state.total + 1,
+                correct: this.state.correct + 1,
+                score: this.state.score + 1,
+                userCapital: '',
+                selectedState: "",
+                selectedCapital: "",
+            })
+        } else {
+            this.setState({
+                total: this.state.total + 1,
+                incorrect: this.state.incorrect + 1,
+                score: this.state.score - 1,
+                userCapital: '',
+                selectedState: "",
+                selectedCapital: "",
+            })
+        }
+        this.chooseRandomState()
+    }
+
+    updatePlayerScore = () => {
+        this.state.games.splice(this.state.length, 0, {
+            playerName: this.state.player,
+            playerScore: this.state.score,
+            playerTopScore: this.state.topScore,
+            playerCorrect: this.state.correct,
+            playerIncorrect: this.state.incorrect,
+            playerTotal: this.state.total,
+        })
+
+        this.setState({
+            player: "Player Name",
+            score: 0,
+            topScore: 0,
+            correct: 0,
+            incorrect: 0,
+            total: 0,
+        })
+    }
+
+    _handleTextChange = inputValue => {
+        this.setState({ inputValue });
+    };
+
+    render() {
+        return (
+            <View style={styles.container}>
+                <View style={styles.textContainer}>
+                    <Text style={styles.title}>
+                        States and Capitals Game
+                    </Text>
+                </View>
+
+                <View style={{ display: this.state.playerNamePageDisplay }}>
+                    <ImageBackground
+                        style={styles.background}
+                        source={{ uri: 'https://codehs.com/uploads/670c4992d501ffd3dc9b4afa26080034' }}
+                    >
+                        <View style={styles.contentContainer}>
+                            <Text style={styles.paragraph}>
+                                Change Player Names
+                            </Text>
+                            <View style={styles.row}>
+                                <TextInput
+                                    style={styles.paragraphBox}
+                                    onChangeText={(player) => this.setState({player})}
+                                    value={this.state.player}
+                                />
+                            </View>
+                        </View>
+                    </ImageBackground>
+                </View>
+
+                <View style={{ display: this.state.gameDisplay }}>
+                    <ImageBackground
+                        style={styles.background}
+                        source={{ uri: 'https://codehs.com/uploads/670c4992d501ffd3dc9b4afa26080034' }}
+                    >
+                        <View style={styles.contentContainer}>
+                            <View style={styles.scoreBox}>
+                                <Text style={styles.paragraph}> States and Capitals Game </Text>
+                                <Text style={styles.paragraphBox}>
+                                    What is the capital of {this.state.selectedState}?
+                                </Text>
+                            </View>
+                            <View style={styles.buttonContainer}>
+                                <View style={styles.dateBox}>
+                                    <TextInput
+                                        style={styles.dateBoxText}
+                                        onChangeText={(userCapital) => this.setState({userCapital})}
+                                        value={this.state.userCapital}
+                                    />
+                                </View>
+                                <TouchableHighlight
+                                    style={styles.navBarButton}
+                                    onPress={() => this.checkPlayerAnswer()}
+                                >
+                                    <Text style={styles.navBarButtonText}>
+                                        Submit Answer
+                                    </Text>
+                                </TouchableHighlight>
+                                
+                            </View>
+                            <View style={styles.scoreBox}>
+                                <Text style={styles.paragraph}>
+                                    Scores
+                                </Text>
+                                <Text style={styles.paragraphBox}>
+                                    {this.state.player}: {this.state.correct} - {this.state.incorrect} - {this.state.total}
+                                </Text>
+                            </View>
+                            
+                            <TouchableHighlight
+                                    style={styles.navBarButton}
+                                    onPress={() => this.updatePlayerScore()}
+                                >
+                                    <Text style={styles.navBarButtonText}>
+                                        End Game
+                                    </Text>
+                                </TouchableHighlight>
+                            
+                        </View>
+                        
+                        
+                        
+                    </ImageBackground>
+                </View>
+
+                <View style={{ display: this.state.standingsPageDisplay }}>
+                    <ImageBackground
+                        style={styles.background}
+                        source={{ uri: 'https://codehs.com/uploads/670c4992d501ffd3dc9b4afa26080034' }}
+                    >
+                        <View style={styles.contentContainer}>
+                            <Text style={styles.paragraph}>
+                                Player Standings
+                            </Text>
+                            <View style={styles.scoreBox}>
+                                <Text style={styles.paragraph}>
+                                    Scores
+                                </Text>
+                                <Text style={styles.paragraphBox}>
+                                    {this.state.player}: {this.state.correct} - {this.state.incorrect} - {this.state.total}
+                                </Text>
+                            </View>
+                            <View style={styles.blackBox}>
+                                <View style={styles.buttonContainer}>
+                                    <View style={styles.column}>
+                                        <Text style={styles.blackBoxTitle}>
+                                            Player Name
+                                        </Text>
+                                        {this.state.games.map((game) => (
+                                            <View style={styles.buttonContainer}>
+                                                <Text style={styles.blackBoxText}>
+                                                    {game.playerName}
+                                                </Text>
+                                            </View>
+                                        ))}
+                                    </View>
+                                    <View style={styles.column}>
+                                        <Text style={styles.blackBoxTitle}>
+                                            Correct
+                                        </Text>
+                                        {this.state.games.map((game) => (
+                                            <View style={styles.buttonContainer}>
+                                                <Text style={styles.blackBoxText}>
+                                                    {game.playerCorrect}
+                                                </Text>
+                                            </View>
+                                        ))}
+                                    </View>
+                                    <View style={styles.column}>
+                                        <Text style={styles.blackBoxTitle}>
+                                            Incorrect
+                                        </Text>
+                                        {this.state.games.map((game) => (
+                                            <View style={styles.buttonContainer}>
+                                                <Text style={styles.blackBoxText}>
+                                                    {game.playerIncorrect}
+                                                </Text>
+                                            </View>
+                                        ))}
+                                    </View>
+                                    <View style={styles.column}>
+                                        <Text style={styles.blackBoxTitle}>
+                                            Score
+                                        </Text>
+                                        {this.state.games.map((game) => (
+                                            <View style={styles.buttonContainer}>
+                                                <Text style={styles.blackBoxText}>
+                                                    {game.playerScore}
+                                                </Text>
+                                            </View>
+                                        ))}
+                                    </View>
+                                </View>
+                            </View>
+                        </View>
+                    </ImageBackground>
+                </View>
+
+                <View style={styles.navBarContainer}>
+                    <TouchableHighlight
+                        style={styles.navBarButton}
+                        onPress={this.handlePlayerNamePagePress}
+                    >
+                        <Text style={styles.navBarButtonText}>
+                            Player Names
+                        </Text>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={styles.navBarButton}
+                        onPress={this.handleGameDisplayPagePress}
+                    >
+                        <Text style={styles.navBarButtonText}>
+                            Game
+                        </Text>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={styles.navBarButton}
+                        onPress={this.handleStandingsPagePress}
+                    >
+                        <Text style={styles.navBarButtonText}>
+                            Standings
+                        </Text>
+                    </TouchableHighlight>
+                </View>
+            </View>
+        );
+    }
+}
+
+const styles = StyleSheet.create({
+    container: {
+        height: deviceHeight,
+        width: deviceWidth,
+        alignItems: 'center',
+        backgroundColor: 'lightblue',
+    },
+    contentContainer: {
+        width: deviceWidth,
+        height: deviceHeight * 15/20,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    textContainer: {
+        height: deviceHeight * 3/20,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'lightblue',
+        marginTop: 5,
+    },
+    background: {
+        height: deviceHeight * 15 / 20,
+        width: deviceWidth,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    title: {
+        color: 'white',
+        fontSize: deviceHeight * 1 / 15,
+        textAlign: 'center',
+        fontWeight: 'bold',
+        marginBottom: deviceHeight * 1 / 30,
+    },
+    paragraph: {
+        color: 'white',
+        fontSize: deviceHeight * 9/160,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        flexDirection: 'row',
+    },
+    row: {
+        flexDirection: 'row',
+    },
+    scoreBox: {
+        color: 'white',
+        borderColor: 'white',
+        borderWidth: deviceHeight * 2 / 150,
+        fontSize: deviceHeight * 1 / 25,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        justifyContent: 'center',
+        marginTop: deviceHeight * 1 / 30,
+        width: deviceWidth * 1/4,
+    },
+    paragraphBox: {
+        color: 'white',
+        borderColor: 'white',
+        borderWidth: deviceHeight * 2 / 150,
+        fontSize: deviceHeight * 1 / 30,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        justifyContent: 'center',
+        marginTop: deviceHeight * 1 / 50,
+        width: deviceWidth * 3/4,
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+    },
+    columns: {
+        flexDirection: 'column',
+    },
+    button: {
+        height: deviceWidth * 3 / 12,
+        width: deviceWidth * 5 / 12,
+        backgroundColor: 'darkblue',
+        borderColor: 'white',
+        borderWidth: deviceWidth * 1 / 75,
+        alignItems: 'center',
+        justifyContent: 'center',
+        margin: deviceWidth * 1/40,
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: deviceWidth * 1 / 25,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    navBarContainer: {
+        height: deviceHeight * 2 / 20,
+        width: deviceWidth,
+        marginBottom: 3,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'darkblue',
+        borderTopWidth: 5,
+        borderTopColor: 'white',
+    },
+    navBarButton: {
+        width: deviceWidth * 63 / 256,
+        height: deviceHeight * 1 / 15,
+        backgroundColor: 'darkblue',
+        margin: 5,
+        borderColor: 'white',
+        borderWidth: deviceWidth * 1 / 75,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    navBarButton2: {
+        width: deviceWidth * 126 / 256,
+        height: deviceHeight * 1 / 15,
+        backgroundColor: 'darkblue',
+        margin: deviceWidth * 1 / 60,
+        marginTop: 5,
+        borderColor: 'white',
+        borderWidth: deviceWidth * 1 / 75,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    navBarButtonText: {
+        color: 'white',
+        fontSize: deviceHeight * 1 / 40,
+        textAlign: 'center',
+    },
+    scoreBox: {
+        borderColor: 'white',
+        height: deviceHeight * 6 / 30,
+        borderWidth: deviceWidth * 1 / 75,
+        justifyContent: 'space-around',
+        alignItems: 'space-between',
+        margin: 5,
+    },
+    scoreBox2: {
+        borderColor: 'white',
+        height: deviceHeight * 9 / 30,
+        width: deviceWidth * 28 / 36,
+        justifyContent: 'center',
+        margin: 5,
+        alignItems: 'center',
+    },
+    dateBox: {
+        width: deviceWidth * 1 / 2,
+        height: deviceHeight * 1 / 15,
+        borderColor: 'white',
+        margin: 5,
+        borderWidth: 5,
+    },
+    dateBox2: {
+        width: deviceWidth * 5 / 8,
+        height: deviceHeight * 1 / 15,
+        borderColor: 'white',
+        margin: 2,
+        borderWidth: 5,
+    },
+    dateBoxText: {
+        color: 'white',
+        fontSize: deviceWidth * 1 / 20,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    blackBox: {
+        backgroundColor: 'black',
+        borderColor: 'white',
+        borderWidth: 5,
+        height: deviceHeight * 1 / 3,
+        width: deviceWidth * 28 / 36,
+        alignItems: 'space-between',
+        margin: 5,
+    },
+    blackBoxTitle: {
+        color: 'white',
+        fontSize: deviceHeight * 1 / 50,
+        textAlign: 'center',
+        fontWeight: 'bold',
+        margin: 5,
+    },
+    blackBoxText: {
+       color: 'white',
+        fontSize: deviceHeight * 1 / 70,
+        textAlign: 'center',
+        margin: 5,
+    },
+});
