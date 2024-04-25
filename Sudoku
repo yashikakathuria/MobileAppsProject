@@ -6,123 +6,39 @@ let deviceHeight = Dimensions.get('window').height;
 let deviceWidth = Dimensions.get('window').width;
 
 export default class App extends Component {
-    state = {
-        score: 0,
-        easyDisplay: 'none',
-        mainDisplay: 'block',
-        instructionsDisplay: 'none',
-        mediumDisplay: 'none',
-        hardDisplay: 'none',
-        gameBoard: [
-            {
-                square: 1,
-                num1: 0,
-                num2: 0,
-                num3: 0,
-                num4: 0,
-                num5: 0,
-                num6: 0,
-                num7: 0,
-                num8: 0,
-                num9: 0,
-            },
-            {
-                square: 2,
-                num1: 0,
-                num2: 0,
-                num3: 0,
-                num4: 0,
-                num5: 0,
-                num6: 0,
-                num7: 0,
-                num8: 0,
-                num9: 0,
-            },
-            {
-                square: 3,
-                num1: 0,
-                num2: 0,
-                num3: 0,
-                num4: 0,
-                num5: 0,
-                num6: 0,
-                num7: 0,
-                num8: 0,
-                num9: 0,
-            },
-            {
-                square: 4,
-                num1: 0,
-                num2: 0,
-                num3: 0,
-                num4: 0,
-                num5: 0,
-                num6: 0,
-                num7: 0,
-                num8: 0,
-                num9: 0,
-            },
-            {
-                square: 5,
-                num1: 0,
-                num2: 0,
-                num3: 0,
-                num4: 0,
-                num5: 0,
-                num6: 0,
-                num7: 0,
-                num8: 0,
-                num9: 0,
-            },
-            {
-                square: 6,
-                num1: 0,
-                num2: 0,
-                num3: 0,
-                num4: 0,
-                num5: 0,
-                num6: 0,
-                num7: 0,
-                num8: 0,
-                num9: 0,
-            },
-            {
-                square: 7,
-                num1: 0,
-                num2: 0,
-                num3: 0,
-                num4: 0,
-                num5: 0,
-                num6: 0,
-                num7: 0,
-                num8: 0,
-                num9: 0,
-            },
-            {
-                square: 8,
-                num1: 0,
-                num2: 0,
-                num3: 0,
-                num4: 0,
-                num5: 0,
-                num6: 0,
-                num7: 0,
-                num8: 0,
-                num9: 0,
-            },
-            {
-                square: 9,
-                num1: 0,
-                num2: 0,
-                num3: 0,
-                num4: 0,
-                num5: 0,
-                num6: 0,
-                num7: 0,
-                num8: 0,
-                num9: 0,
-            },
-        ]
+    constructor(props) {
+        super(props);
+        this.state = {
+            score: 0,
+            easyDisplay: 'none',
+            mainDisplay: 'block',
+            instructionsDisplay: 'none',
+            mediumDisplay: 'none',
+            hardDisplay: 'none',
+            square1: ["", "", "", "", "", "", "", "", ""],
+            square2: ["", "", "", "", "", "", "", "", ""],
+            square3: ["", "", "", "", "", "", "", "", ""],
+            square4: ["", "", "", "", "", "", "", "", ""],
+            square5: ["", "", "", "", "", "", "", "", ""],
+            square6: ["", "", "", "", "", "", "", "", ""],
+            square7: ["", "", "", "", "", "", "", "", ""],
+            square8: ["", "", "", "", "", "", "", "", ""],
+            square9: ["", "", "", "", "", "", "", "", ""],
+        };
+    }
+    
+    reset() {
+        this.setState({
+            square1: ["", "", "", "", "", "", "", "", ""],
+            square2: ["", "", "", "", "", "", "", "", ""],
+            square3: ["", "", "", "", "", "", "", "", ""],
+            square4: ["", "", "", "", "", "", "", "", ""],
+            square5: ["", "", "", "", "", "", "", "", ""],
+            square6: ["", "", "", "", "", "", "", "", ""],
+            square7: ["", "", "", "", "", "", "", "", ""],
+            square8: ["", "", "", "", "", "", "", "", ""],
+            square9: ["", "", "", "", "", "", "", "", ""],
+        })
     }
     
     handleEasyDisplayPagePress = () => this.setState(state => ({
@@ -191,59 +107,88 @@ export default class App extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.paragraph}>
-                    Change code in the editor and watch it change on your phone!
-                </Text>
+            
+                <View style={styles.contentContainer}>
+                    
+                
+                </View>
+                
+                
+                
+                <View style={styles.navbarContainer}>
+                
+                    <TouchableHighlight style={styles.navButton}>
+                        <Text style={styles.navButtonText}>
+                            Welcome
+                        </Text>
+                    </TouchableHighlight>
+                    
+                    <TouchableHighlight style={styles.navButton}>
+                        <Text style={styles.navButtonText}>
+                            Rules
+                        </Text>
+                    </TouchableHighlight>
+                    
+                    <TouchableHighlight style={styles.navButton}>
+                        <Text style={styles.navButtonText}>
+                            Easy Level
+                        </Text>
+                    </TouchableHighlight>
+                    
+                    <TouchableHighlight style={styles.navButton}>
+                        <Text style={styles.navButtonText}>
+                            Medium Level
+                        </Text>
+                    </TouchableHighlight>
+                    
+                    <TouchableHighlight style={styles.navButton}>
+                        <Text style={styles.navButtonText}>
+                            Hard Level
+                        </Text>
+                    </TouchableHighlight>
+                </View>
+                
             </View>
-        );
-    }
+      );
+   }
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'center',
+        height: deviceHeight,
+        width: deviceWidth,
+    },
+    contentContainer: {
+        height: 5*(deviceHeight/6),
+        width: deviceWidth,
         alignItems: 'center',
-    },
-    rowContainer: {
-        flexDirection: 'row',
-        height: 70,
-        width: 210,
-    },
-    box: {
-        backgroundColor: 'white',
-        borderColor: 'gray',
-        height: 70,
         justifyContent: 'center',
-        alignItems: 'center',
-        width: 70,
-        borderWidth: 5,
+        backgroundColor: 'lightblue',
     },
-    box2: {
-        backgroundColor: 'gray',
-        borderColor: 'black',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: 70,
-        hieght: 70,
-    },
-    blueBlock: {
+    navbarContainer: {
+        height: deviceHeight/6,
+        width: deviceWidth,
         backgroundColor: 'darkblue',
-        height: 50,
-        width: 100,
-        marginTop: 20,
+        flexDirection: 'row',
+        alignItems: 'center',
         justifyContent: 'center',
-        alignsItems: 'center',
+        borderTopWidth: 10,
+        borderColor: 'white',
     },
-    player: {
-        fontSize: 50,
-        color: 'black',
+    navButton: {
+        height: deviceHeight/14,
+        width: deviceWidth/4,
+        backgroundColor: 'white',
+        borderColor: 'lightblue',
+        borderWidth: 2,
+        alignItems: 'center',
+        justifyContent: 'center',
+        margin: 20,
     },
-    titleText: {
-        fontSize: 10,
+    navButtonText: {
+        fontSize: deviceHeight/40,
         textAlign: 'center',
-        color: 'white',
+        color: 'darkblue',
     },
-    
+
 });
