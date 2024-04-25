@@ -7,6 +7,12 @@ let deviceWidth = Dimensions.get('window').width;
 
 export default class App extends Component {
     state = {
+        score: 0,
+        easyDisplay: 'none',
+        mainDisplay: 'block',
+        instructionsDisplay: 'none',
+        mediumDisplay: 'none',
+        hardDisplay: 'none',
         gameBoard: [
             {
                 square: 1,
@@ -119,6 +125,47 @@ export default class App extends Component {
         ]
     }
     
+    handleEasyDisplayPagePress = () => this.setState(state => ({
+        easyDisplay: 'block',
+        mainDisplay: 'none',
+        instructionsDisplay: 'none',
+        mediumDisplay: 'none',
+        hardDisplay: 'none',
+    }));
+    
+        handleMainDisplayPagePress = () => this.setState(state => ({
+        easyDisplay: 'none',
+        mainDisplay: 'block',
+        instructionsDisplay: 'none',
+        mediumDisplay: 'none',
+        hardDisplay: 'none',
+    }));
+    
+        handleInstructionsDisplayPagePress = () => this.setState(state => ({
+        easyDisplay: 'none',
+        mainDisplay: 'none',
+        instructionsDisplay: 'bock',
+        mediumDisplay: 'none',
+        hardDisplay: 'none',
+    }));
+    
+        handleMediumDisplayPagePress = () => this.setState(state => ({
+        easyDisplay: 'none',
+        mainDisplay: 'none',
+        instructionsDisplay: 'none',
+        mediumDisplay: 'block',
+        hardDisplay: 'none',
+    }));
+    
+        handleHardDisplayPagePress = () => this.setState(state => ({
+        easyDisplay: 'none',
+        mainDisplay: 'none',
+        instructionsDisplay: 'none',
+        mediumDisplay: 'none',
+        hardDisplay: 'block',
+    }));
+    
+    
     //Creating a board with random numbers from 1-9 (doesn't matter order or how many for now)
     randomBoardRender = () => {
         this.state.gameBoard.splice(this.state.length, 0, {
@@ -155,16 +202,48 @@ export default class App extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
+        flexDirection: 'column',
         justifyContent: 'center',
-        paddingTop: Constants.statusBarHeight,
-        backgroundColor: '#ecf0f1',
+        alignItems: 'center',
     },
-    paragraph: {
-        margin: 24,
-        fontSize: 18,
-        fontWeight: 'bold',
+    rowContainer: {
+        flexDirection: 'row',
+        height: 70,
+        width: 210,
+    },
+    box: {
+        backgroundColor: 'white',
+        borderColor: 'gray',
+        height: 70,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 70,
+        borderWidth: 5,
+    },
+    box2: {
+        backgroundColor: 'gray',
+        borderColor: 'black',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 70,
+        hieght: 70,
+    },
+    blueBlock: {
+        backgroundColor: 'darkblue',
+        height: 50,
+        width: 100,
+        marginTop: 20,
+        justifyContent: 'center',
+        alignsItems: 'center',
+    },
+    player: {
+        fontSize: 50,
+        color: 'black',
+    },
+    titleText: {
+        fontSize: 10,
         textAlign: 'center',
-        color: '#34495e',
+        color: 'white',
     },
+    
 });
