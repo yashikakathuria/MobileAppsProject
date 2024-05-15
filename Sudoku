@@ -5,152 +5,128 @@ import Constants from 'expo-constants';
 let deviceHeight = Dimensions.get('window').height;
 let deviceWidth = Dimensions.get('window').width;
 
+
 export default class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
             score: 0,
-            easyDisplay: 'none',
+            homePage: 'block',
             mainDisplay: 'block',
             instructionsDisplay: 'none',
-            mediumDisplay: 'none',
-            hardDisplay: 'none',
-            square1: ["", "", "", "", "", "", "", "", ""],
-            square2: ["", "", "", "", "", "", "", "", ""],
-            square3: ["", "", "", "", "", "", "", "", ""],
-            square4: ["", "", "", "", "", "", "", "", ""],
-            square5: ["", "", "", "", "", "", "", "", ""],
-            square6: ["", "", "", "", "", "", "", "", ""],
-            square7: ["", "", "", "", "", "", "", "", ""],
-            square8: ["", "", "", "", "", "", "", "", ""],
-            square9: ["", "", "", "", "", "", "", "", ""],
+            board: [
+                ["", "", "", "", "", "", "", "", ""],
+                ["", "", "", "", "", "", "", "", ""],
+                ["", "", "", "", "", "", "", "", ""],
+                ["", "", "", "", "", "", "", "", ""],
+                ["", "", "", "", "", "", "", "", ""],
+                ["", "", "", "", "", "", "", "", ""],
+                ["", "", "", "", "", "", "", "", ""],
+                ["", "", "", "", "", "", "", "", ""],
+                ["", "", "", "", "", "", "", "", ""],
+            ],
+            rowcheck: ["1", "2", "3", "4", "5", "6", "7", "8", "9"],
+            columncheck: ["1", "2", "3", "4", "5", "6", "7", "8", "9"],
         };
     }
-    
-    reset() {
+
+    reset = () => {
         this.setState({
-            square1: ["", "", "", "", "", "", "", "", ""],
-            square2: ["", "", "", "", "", "", "", "", ""],
-            square3: ["", "", "", "", "", "", "", "", ""],
-            square4: ["", "", "", "", "", "", "", "", ""],
-            square5: ["", "", "", "", "", "", "", "", ""],
-            square6: ["", "", "", "", "", "", "", "", ""],
-            square7: ["", "", "", "", "", "", "", "", ""],
-            square8: ["", "", "", "", "", "", "", "", ""],
-            square9: ["", "", "", "", "", "", "", "", ""],
-        })
+            board: [
+                ["", "", "", "", "", "", "", "", ""],
+                ["", "", "", "", "", "", "", "", ""],
+                ["", "", "", "", "", "", "", "", ""],
+                ["", "", "", "", "", "", "", "", ""],
+                ["", "", "", "", "", "", "", "", ""],
+                ["", "", "", "", "", "", "", "", ""],
+                ["", "", "", "", "", "", "", "", ""],
+                ["", "", "", "", "", "", "", "", ""],
+                ["", "", "", "", "", "", "", "", ""],
+            ],
+        });
     }
-    
-    handleEasyDisplayPagePress = () => this.setState(state => ({
+
+    handleEasyDisplayPagePress = () => this.setState({
         easyDisplay: 'block',
         mainDisplay: 'none',
         instructionsDisplay: 'none',
-        mediumDisplay: 'none',
-        hardDisplay: 'none',
-    }));
-    
-        handleMainDisplayPagePress = () => this.setState(state => ({
+    });
+
+    handleMainDisplayPagePress = () => this.setState({
         easyDisplay: 'none',
         mainDisplay: 'block',
         instructionsDisplay: 'none',
-        mediumDisplay: 'none',
-        hardDisplay: 'none',
-    }));
-    
-        handleInstructionsDisplayPagePress = () => this.setState(state => ({
+    });
+
+    handleInstructionsDisplayPagePress = () => this.setState({
         easyDisplay: 'none',
         mainDisplay: 'none',
-        instructionsDisplay: 'bock',
-        mediumDisplay: 'none',
-        hardDisplay: 'none',
-    }));
-    
-        handleMediumDisplayPagePress = () => this.setState(state => ({
-        easyDisplay: 'none',
-        mainDisplay: 'none',
-        instructionsDisplay: 'none',
-        mediumDisplay: 'block',
-        hardDisplay: 'none',
-    }));
-    
-        handleHardDisplayPagePress = () => this.setState(state => ({
-        easyDisplay: 'none',
-        mainDisplay: 'none',
-        instructionsDisplay: 'none',
-        mediumDisplay: 'none',
-        hardDisplay: 'block',
-    }));
-    
-    
-    //Creating a board with random numbers from 1-9 (doesn't matter order or how many for now)
+        instructionsDisplay: 'block',
+    });
+
     randomBoardRender = () => {
-        this.state.gameBoard.splice(this.state.length, 0, {
-            square: this.state.square,
-            
-        })
+        const newBoard = this.state.board.map(row => 
+            row.map(() => Math.floor(Math.random() * 9 + 1))
+        );
+        this.setState({ board: newBoard });
     }
-    
-    //Uses randomly created board and makes sure it fits all rules stated by rules method, then sets it as new board
+
     editGameBoard = () => {
-        
+        if()
     }
-    
+
     rules = () => {
-        if(this.state.gameBoard[i].num1 = this.state.gameBoard[j].num1) {
-            this.state.gameBoard[i]
+        for(let i = 0; i < 9; i++) {
+            for(let j = 0; j < 9; j++) {
+                for(let k = 0; k < 9; k++) {
+                    if (this.state.board[i][k] == this.state.board[i][j]) {
+                        this.set(this.state.rowcheck[j] = 0)};
+                    }
+                    else {
+                        for(let n= 0; n < 9; n++) {
+                            this.set{this.rowcheck[j] == 0)};
+                            this.set(this.state.board[i][k] = {this.state.rowcheck[n] != 0})
+                        }
+                    }
+                    if (this.state.board[j][k] == this.state.board[j][i]) {
+                        this.set(this.state.columncheck[i] = 0)};
+                    }
+                    else {
+                        for(let n= 0; n < 9; n++) {
+                            this.set{this.columncheck[j] == 0)};
+                            this.set(this.state.board[i][k] = {this.state.columncheck[n] != 0})
+                        }
+                    }
+                }
+            }
         }
     }
-    
-    
-    
-    
+
     render() {
         return (
             <View style={styles.container}>
-            
                 <View style={styles.contentContainer}>
+                    <Text>
                     
-                
+                    </Text>
                 </View>
-                
-                
                 
                 <View style={styles.navbarContainer}>
-                
-                    <TouchableHighlight style={styles.navButton}>
-                        <Text style={styles.navButtonText}>
-                            Welcome
-                        </Text>
+                    <TouchableHighlight style={styles.navButton} onPress={this.handleMainDisplayPagePress}>
+                        <Text style={styles.navButtonText}>Welcome</Text>
                     </TouchableHighlight>
                     
-                    <TouchableHighlight style={styles.navButton}>
-                        <Text style={styles.navButtonText}>
-                            Rules
-                        </Text>
+                    <TouchableHighlight style={styles.navButton} onPress={this.handleInstructionsDisplayPagePress}>
+                        <Text style={styles.navButtonText}>Rules</Text>
                     </TouchableHighlight>
                     
-                    <TouchableHighlight style={styles.navButton}>
-                        <Text style={styles.navButtonText}>
-                            Easy Level
-                        </Text>
-                    </TouchableHighlight>
-                    
-                    <TouchableHighlight style={styles.navButton}>
-                        <Text style={styles.navButtonText}>
-                            Medium Level
-                        </Text>
-                    </TouchableHighlight>
-                    
-                    <TouchableHighlight style={styles.navButton}>
-                        <Text style={styles.navButtonText}>
-                            Hard Level
-                        </Text>
+                    <TouchableHighlight style={styles.navButton} onPress={this.handleEasyDisplayPagePress}>
+                        <Text style={styles.navButtonText}>Easy Level</Text>
                     </TouchableHighlight>
                 </View>
-                
             </View>
-      );
-   }
+        );
+    }
 }
 
 const styles = StyleSheet.create({
@@ -159,14 +135,14 @@ const styles = StyleSheet.create({
         width: deviceWidth,
     },
     contentContainer: {
-        height: 5*(deviceHeight/6),
+        height: 5 * (deviceHeight / 6),
         width: deviceWidth,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'lightblue',
     },
     navbarContainer: {
-        height: deviceHeight/6,
+        height: deviceHeight / 6,
         width: deviceWidth,
         backgroundColor: 'darkblue',
         flexDirection: 'row',
@@ -176,8 +152,8 @@ const styles = StyleSheet.create({
         borderColor: 'white',
     },
     navButton: {
-        height: deviceHeight/14,
-        width: deviceWidth/4,
+        height: deviceHeight / 14,
+        width: deviceWidth / 4,
         backgroundColor: 'white',
         borderColor: 'lightblue',
         borderWidth: 2,
@@ -186,9 +162,8 @@ const styles = StyleSheet.create({
         margin: 20,
     },
     navButtonText: {
-        fontSize: deviceHeight/40,
+        fontSize: deviceHeight / 40,
         textAlign: 'center',
         color: 'darkblue',
     },
-
 });
